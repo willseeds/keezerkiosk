@@ -1,0 +1,6 @@
+a { color:#000000; } 
+a:visited { color:#000000; } 
+a:active { color:#5D5D9E; } 
+a:hover { color:#5D5D9E; }
+
+body { padding:0;  margin: 0; font-size:12pt; font-family:Arial, Helvetica, sans-serif; color:#000000; }
