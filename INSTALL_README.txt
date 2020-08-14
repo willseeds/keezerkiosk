@@ -1,4 +1,4 @@
-# keezerkiosk
+# keezerkiosk 1.0 (8.6.20)
  The initial release
 
 **********************************************
@@ -109,8 +109,12 @@ Then install apache2 (webserver);
 ‘sudo apt-get install apache2’
 
 the MySQL server is installed with;
-‘sudo apt-get install mariadb’
-   The sql server admin password is selected at install. The admin user ‘root’ password should NOT be the the same as any user on your system, since the password will be physically on the server (another reason to not expose this to the external internet). Creating other users is not required for the purposes of this tutorial. If you do decide to add another user for the database, make sure that the user can add, revise, delete data, but not add users (again not be a system user).
+‘sudo apt-get install mariadb-server’
+then run 'sudo mysql_secure_installation' to set password, remove root login remotely and remove test dbs
+The sql server admin password is selected at install. The admin user ‘root’ password should NOT be the the same as any user on your system, since the password will be physically on the server (another reason to not expose this to the external internet). Creating other users is not required for the purposes of this tutorial. If you do decide to add another user for the database, make sure that the user can add, revise, delete data, but not add users (again not be a system user).
+
+   if you have issues logging into the MySQL database using the command line, check this article:
+   https://serverfault.com/questions/795290/admin-password-of-mariadb-doesnt-seem-to-work
 
 install php for sql;
 ‘sudo apt-get install php-MySQL’
@@ -133,6 +137,12 @@ For purposes of starting at boot, I would also suggest iceweasel, which is Firef
 
 
 Step 4 
+- This step is kinda optional if you are installing right on the system itself.
+   you will have to update the ownership of /var/www to pi
+   'sudo chown pi /var/www'
+   you can use sudo to extract the .zip file to the /var/www folder
+   but you are going to be making a few updates. change it back later!
+
 - Samba file server to make updates
    i performed all functions through samba file connection or directly on the pi and left ftp/ssh disabled
    Samba: Set up a Raspberry Pi as a File Server for your local network
@@ -140,6 +150,8 @@ Step 4
    - edit applicable files for your internal network, so it is recognized
    - add user pi to the www-user group
    - add the /var/www as a network share with access for pi
+   - you will have to change the ownership of the /var/www to pi 
+   - do this by typing 'sudo chown /var/www pi'
 
 
 Step 5
@@ -149,11 +161,14 @@ http://github.com/willseeds
 
 The source files are packaged to be copied to your server root (http://localhost/) to the keezer folder. If you are stating fresh there is probably already an index.html or index.php file in that folder (default; /var/www/html). Create a new folder in there called ‘keezer’. Copy all files to this folder. (http://localhost/keezer/) will be located in folder: /var/www/html/keezer/
 
-Now move the private files starting with an understore “_” to /var/www/ (above the webroot) so they can be included in pages. If you install this in the webroot and not a keezer folder, you will have to edit the include locations on each page. 
+Now move the private files starting with an understore “_” to /var/www/ (above the webroot) so they can be included in pages. If you install this in the webroot and not a keezer folder, you will have to edit the include locations on each page. Remove the "_" from the file name.
 
-Edit the keezerconfig.php file with your elements. There’s nothing to see in the common.php file. I have included white and black backgrounds for css files, so feel free to edit colors and text/fonts as desired in the globals.php file and copy/edit a new "color".css file. 
+Edit the keezerdb.php file with your database information. There’s nothing to see in the common.php file. I have included white and black backgrounds for css files, so feel free to edit colors and text/fonts as desired in the globals.php file and copy/edit a new "color".css file. 
 
-Log into the phpMyAdmin site and create a new database called "keezer". Click the import information and use the _keezer_db_import.txt, which should set up the initial database structure for the web application. It is suggested that you edit the information on the database with your information here and afterward it will be easy to copy/paste info in just the add.php (Admin>Add Beer) file. Then use the update-beer.php (Update> Beer selection) to only change date info, keeping to the 10-digit format, YYYY-MM-DD.
+Log into the phpMyAdmin site and create a new database called "keezer". Click the import information and use the _keezer_db_import.txt, which should set up the initial database structure for the web application. Don't worry about the errors. It is suggested that you edit the information on the database with your information here and afterward it will be easy to copy/paste info in just the add.php (Admin>Add Beer) file. Then use the update-beer.php (Update> Beer selection) to only change date info, keeping to the 10-digit format, YYYY-MM-DD.
+
+- Check this link to flip the screen if needed:
+  https://www.raspberrypi.org/forums/viewtopic.php?f=108&t=166959
 
 
 Step 6
@@ -207,14 +222,14 @@ i suggest this sensor for the ability to just add in another sensor (1-wire) and
    How the 1-wire is connected
    https://thepihut.com/blogs/raspberry-pi-tutorials/18095732-sensors-temperature-with-the-1-wire-interface-and-the-ds18b20
 
-Raspberry Pi Touch Display - 7" touch screen and case for about $90
+   Raspberry Pi Touch Display - 7" touch screen and case for about $90
    https://www.raspberrypi.org/documentation/hardware/display/
 
-cron for backing up mysql/site
+   cron for backing up mysql/site
    set up time-interval backups locally or over your network (mine goes to a nas)
    https://www.raspberrypi.org/documentation/linux/usage/cron.md
 
-*final note: nothing was ever learned without breaking it first.
+   *final note: nothing was ever learned without breaking it first.
 
 
 // about @willseeds
