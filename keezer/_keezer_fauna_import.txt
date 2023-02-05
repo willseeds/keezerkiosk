@@ -1,0 +1,2 @@
+// reconfigure the keezer kiosk to a Fauna DB connection.
+// also add admin privs behind login
